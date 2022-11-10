@@ -1,15 +1,16 @@
 // import User Model
 const { User } = require('../models');
 
+// user controller setup
 const userController = {
 
     // GET, all users
     getAllUsers(req,res) {
         User.find({})
-        // .populate({
-        //     path: 'thought',
-        //     select: '-__v'
-        // })
+        .populate({
+            path: 'thought',
+            select: '-__v'
+        })
         .populate({
             path: 'friends',
             select: '-__v'
