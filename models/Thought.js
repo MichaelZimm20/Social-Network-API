@@ -4,7 +4,6 @@ const { Schema, model, Types } = require('mongoose');
 // import dateFormat function
 const dateFormat = require('../utils/dateFormat');
 
-
 // Reactions Schema 
 const ReactionSchema = new Schema (
     {
