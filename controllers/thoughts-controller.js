@@ -51,7 +51,7 @@ const thoughtsController = {
     // PUT, update a thought by its id
     updateThought({ params, body }, res) {
         Thought.findOneAndUpdate(
-            { _id: thoughtId },
+            { _id: params.thoughtId },
             body,
             { new: true, runValidators: true }
         )
@@ -67,7 +67,15 @@ const thoughtsController = {
 
     // DELETE, remove a thought by its id
     deleteThought({ params }, res) {
-        Thought.findOneAndDelete({ _id: params.userId })
+        Thought.findOneAndDelete({ _id: params.thoughtId })
+            .then(thoughtDeleted => {
+                if(!thoughtDeleted) {
+                    res.json({ message: ' No thought can be found by this id!' })
+                } else {
+                    res.json(thoughtDeleted)
+                }
+            })
+            .catch(err => res.status(400).json(err));
     },
 
     // POST, create a reaction stored in a single thought's reactions
