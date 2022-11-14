@@ -1,5 +1,5 @@
 // import schema and model from mongoose
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 // user Schema 
 const UserSchema = new Schema (
@@ -20,7 +20,7 @@ const UserSchema = new Schema (
         thoughts: [
             {
             type: Schema.Types.ObjectId,
-            ref: 'Thought'
+            ref: 'Thoughts'
             }
         ],
         friends: [
