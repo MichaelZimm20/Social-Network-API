@@ -24,6 +24,7 @@ const thoughtsController = {
                 res.status(404).json({ message: 'No thought found with this id!' });
                 return;
             }
+            console.log(singleThoughtData);
             res.json(singleThoughtData);
         })
         .catch(err => {
@@ -79,15 +80,44 @@ const thoughtsController = {
     },
 
     // POST, create a reaction stored in a single thought's reactions
-    addReaction({ params }, res) {
-        User.findOneAndUpdate()
+    addReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $addToSet: { reactions: body } },
+            { new: true, runValidators: true }
+        )
+            .populate({
+                path: 'reactions',
+                select: '-__v'
+            })
+                .select('-__v')
+                    .then(reactionData => {
+                        if(!reactionData){
+                            res.json({ message: 'No reaction can be found by this id!' })
+                        } else {
+                            res.json(reactionData)
+                        }
+                    })
+                    .catch(err => res.status(400).json(err))
     },
 
     // DELETE, pull and remove a reaction by the reaction's reactionId
     removeReaction({ params }, res){
-        User.findOneAndUpdate()
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $pull: {reactions: {reactionId: params.reactionId } } },
+            { new: true }
+        )
+        .then(reactionData => {
+            if(!reactionData) {
+                res.json({ message: 'No reaction can be found by this id!' })
+            } else {
+                res.json(reactionData)
+            }
+        })
+        .catch(err => res.status(400).json(err))
     }
-}
+};
 
 // export thoughts controller 
-module.exports = thoughtsController
+module.exports = thoughtsController;
