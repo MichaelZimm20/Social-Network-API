@@ -37,7 +37,7 @@ This application is back-end application and runs throught Insomnia for testing 
  ## Important Links 
 * GitHub Link: https://github.com/MichaelZimm20/Social-Network-API
 
-* Walkthrough Link: https://pizza-hunt-max-pro.herokuapp.com/
+* Walkthrough Link: https://www.loom.com/share/ef94b9433bd44c47acb84d903ca5a298
 
 ## Questions 
   If you have any questions or concerns, contact:
